@@ -2,9 +2,13 @@ package com.sparta.currency_user.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "user")
 public class User extends BaseEntity {
     @Id
@@ -13,6 +17,9 @@ public class User extends BaseEntity {
 
     private String name;
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Exchange> exchanges;
 
     public User(String name, String email) {
         this.name = name;

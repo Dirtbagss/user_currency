@@ -15,7 +15,7 @@ public class Exchange extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -26,7 +26,7 @@ public class Exchange extends BaseEntity {
     private double amountInKrw;
     private double amountAfterExchange;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Exchange(User user, Currency currency, double amountInKrw, double amountAfterExchange, Status status) {
