@@ -5,14 +5,16 @@ import com.sparta.currency_user.entity.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.math.BigDecimal;
+
 @Getter
 @AllArgsConstructor
 public class ExchangeResponseDto {
     private Long ExchangeId;
     private Long userId;
     private Long currencyId;
-    private double amountInKrw;
-    private double amountAfterExchange;
+    private BigDecimal amountInKrw;
+    private String amountAfterExchange;
     private Status status;
 
     public static ExchangeResponseDto toDto(Exchange exchange) {

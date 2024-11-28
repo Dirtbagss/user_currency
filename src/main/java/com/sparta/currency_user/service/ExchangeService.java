@@ -11,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -26,16 +29,21 @@ public class ExchangeService {
         User user = userService.findUserById(request.getUserId());
         Currency currency = currencyService.findCurrencyById(request.getCurrencyId());
 
-        double amountAfterExchange = getAmountExchange(request.getAmountInKrw(), currency);
+        String amountAfterExchange = getAmountExchange(request.getAmountInKrw(), currency);
 
         Exchange exchange = new Exchange(user,currency, request.getAmountInKrw(), amountAfterExchange, Status.NORMAL );
         exchangeRepository.save(exchange);
     }
     // 환전후 금액
-    public double getAmountExchange(Double amountKrw, Currency currency) {
+    public String getAmountExchange(BigDecimal amountKrw, Currency currency) {
         BigDecimal exchangeRate = currency.getExchangeRate();
-        BigDecimal krw = new BigDecimal(amountKrw);
-        return krw.divide(exchangeRate, 2, BigDecimal.ROUND_DOWN).doubleValue();
+        BigDecimal amountExchange = amountKrw.multiply(exchangeRate);
+        if(Objects.equals(currency.getCurrencyName(), "JPY")){
+           return amountExchange.setScale(0, RoundingMode.FLOOR)+currency.getSymbol();
+        }
+        DecimalFormat formatter = new DecimalFormat("#.00");
+        String formattedValue = formatter.format(amountExchange);
+        return formattedValue+currency.getSymbol();
     }
     //수정
     public void updateExchange(Long id) {
