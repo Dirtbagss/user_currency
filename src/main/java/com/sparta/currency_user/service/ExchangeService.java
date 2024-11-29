@@ -2,6 +2,7 @@ package com.sparta.currency_user.service;
 
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
+import com.sparta.currency_user.dto.UserExchangeCountResponseDto;
 import com.sparta.currency_user.entity.Currency;
 import com.sparta.currency_user.entity.Exchange;
 import com.sparta.currency_user.entity.Status;
@@ -69,5 +70,7 @@ public class ExchangeService {
     }
 
 
-
+    public UserExchangeCountResponseDto getExchangeUserCount(Long userId) {
+        return exchangeRepository.getExchangesByUserId(userId);
+    }
 }

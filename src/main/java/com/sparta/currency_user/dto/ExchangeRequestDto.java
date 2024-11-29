@@ -11,6 +11,4 @@ public class ExchangeRequestDto {
     private Long userId;
     private Long currencyId;
     private BigDecimal amountInKrw;
-
-
 }

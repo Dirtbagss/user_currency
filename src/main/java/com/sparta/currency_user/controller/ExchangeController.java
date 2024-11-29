@@ -2,6 +2,7 @@ package com.sparta.currency_user.controller;
 
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
+import com.sparta.currency_user.dto.UserExchangeCountResponseDto;
 import com.sparta.currency_user.service.ExchangeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,11 @@ public class ExchangeController {
     public ResponseEntity<String> deleteExchange(@PathVariable Long id){
         exchangeService.deleteExchange(id);
         return ResponseEntity.ok().body("요청이 삭제되었습니다.");
+    }
+    //고객의 모든 환전 요청 조회
+    @GetMapping("/{userId}/counts")
+    public ResponseEntity<UserExchangeCountResponseDto> getExchangeCount(@PathVariable Long userId){
+        return ResponseEntity.ok().body(exchangeService.getExchangeUserCount(userId));
     }
 
 
